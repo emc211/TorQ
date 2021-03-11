@@ -61,6 +61,8 @@ if[-11h=type inputcsv;inputcsv:string inputcsv];
 checkcsv:{[csvtab]
     // include snappy (3) for version 3.4 or after
     allowedalgos:0 1 2,$[.z.K>=3.4;3;()];
+    // include lz4hc (4) for version 3.6 or after
+    allowedalgos:allowedalgos,$[.z.K>=3.6;4;()];
     if[0b~all colscheck:`table`minage`column`calgo`cblocksize`clevel in (cols csvtab);
          .lg.e[`compression;err:inputcsv," has incorrect column layout at column(s): ", (" " sv string where not colscheck), ". Should be `table`minage`column`calgo`cblocksize`clevel."];'err];
     if[count checkalgo:exec i from csvtab where not calgo in allowedalgos;
