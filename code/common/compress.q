@@ -71,7 +71,7 @@ checkcsv:{[csvtab]
         .lg.e[`compression;err:inputcsv,": incorrect compression level at row(s): ", (" " sv string checklevel), ". Should be between 0 and 9."];'err];
     if[.z.o like "w*"; if[count rowwin:where ((csvtab[`cblocksize] < 16) & csvtab[`calgo] > 0);
         .lg.e[`compression;err:inputcsv," :incorrect compression blocksize for windows at row: ", (" " sv string rowwin), ". Must be more than or equal to 16."];'err]];
-    if[(any nulls: any null (csvtab[`column];csvtab[`table];csvtab[`minage];csvtab[`clevel]))>0;
+    if[(any nulls: any each null (csvtab[`column];csvtab[`table];csvtab[`minage];csvtab[`clevel]))>0;
         .lg.e[`compression;err:inputcsv," has empty cells in column(s): ", (" " sv string `column`table`minage`clevel where nulls)];'err];}
 
 loadcsv:{[inputcsv]
